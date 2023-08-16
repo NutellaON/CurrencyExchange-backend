@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('exchange_rates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('currency_id');
-            $table->decimal('rate', 10, 4);
+            $table->decimal('rate_eur', 10, 6);
+            $table->decimal('rate_usd', 10, 6);
+            $table->decimal('rate_gbp', 10, 6);
+            $table->decimal('rate_aud', 10, 6);
             $table->date('date');
             $table->timestamps();
-            $table->foreign('currency_id')->references('id')->on('currencies');
         });
     }
 
