@@ -8,7 +8,7 @@ use App\Models\ExchangeRate;
 
 class ExchangeRateController extends Controller
 {
-    public function show(Request $request, $currency)
+    public function fetch(Request $request, $currency)
     {
         $selectedCurrency = 'rate_' . $currency;
         $orderBy = $request->query('orderBy', 'desc');

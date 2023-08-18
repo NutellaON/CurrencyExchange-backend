@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/exchange-rates/{currency}', [ExchangeRateController::class, 'show']);
+Route::get('/exchange-rates/{currency}', [ExchangeRateController::class, 'fetch']);
