@@ -8,14 +8,29 @@ use App\Models\ExchangeRate;
 
 class ExchangeRateController extends Controller
 {
-    public function index(Request $request)
+    public function show(Request $request, $currency)
     {
-        $exchangeRates = ExchangeRate::get([
-            "rate_eur", "rate_usd", "rate_gbp", "rate_aud","date"
-        ]);
+        $selectedCurrency = 'rate_' . $currency;
+        $orderBy = $request->query('orderBy', 'desc');
+        $perPage = $request->input('perPage', 10);
+        $latestDate = ExchangeRate::max('date');
+        $maxRate = ExchangeRate::max($selectedCurrency);
+        $minRate = ExchangeRate::min($selectedCurrency);
+        $averageRate = ExchangeRate::average($selectedCurrency);
+
+        if ($orderBy !== 'asc' && $orderBy !== 'desc') {
+            $orderBy = 'desc';
+        }
+
+        $exchangeRates = ExchangeRate::orderBy('date', $orderBy)
+        ->paginate($perPage, ['date', $selectedCurrency]);
 
         return response()->json([
+            'latest_date' => $latestDate,
             'exchange_rates' => $exchangeRates,
+            'maxRate' => $maxRate,
+            'minRate' => $minRate,
+            'averageRate' => $averageRate
         ]);
     }
 }

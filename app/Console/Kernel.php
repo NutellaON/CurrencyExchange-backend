@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $ratesService = new \App\Services\RatesService();
             $ratesService->fetchExchangeRatesAndInsert();
-        })->everyTenSeconds();
+        })->Daily();
     }
 
     /**
